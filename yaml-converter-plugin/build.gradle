@@ -1,0 +1,5 @@
+/* this task copies runtime dependencies to libs folder so no need to checkin jars into git repo */
+task updateRuntimeLibs(type: Copy) {
+    into "libs"
+    from configurations.runtime
+}

@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Yaml Converter
+Bundle-SymbolicName: de.jcup.yamlconverter;singleton:=true
+Bundle-Version: 0.2.0
+Bundle-Activator: de.jcup.yamlconverter.Activator
+Bundle-Vendor: Albert Tregnaghi
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.junit
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: libs/jackson-core-2.9.7.jar,
+ libs/jackson-databind-2.9.7.jar,
+ libs/snakeyaml-1.21.jar,
+ .,
+ libs/jackson-annotations-2.9.7.jar,
+ libs/dom4j-1.6.1.jar
+Import-Package: org.eclipse.core.filesystem,
+ org.eclipse.ui.ide

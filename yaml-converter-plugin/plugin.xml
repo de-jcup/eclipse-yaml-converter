@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass="org.eclipse.core.resources.IFile"
+            id="de.jcup.yamlconverter.contribution1">
+         <menu
+               label="Yaml converter"
+               path="additions"
+               id="de.jcup.yamlconverter.menu1">
+            <separator
+                  name="group1">
+            </separator>
+         </menu>
+         <action
+               label="Convert JSON to YAML"
+               class="de.jcup.yamlconverter.popup.actions.ConvertJSONtoYAMLAction"
+               menubarPath="de.jcup.yamlconverter.menu1/group1"
+               enablesFor="1"
+               id="de.jcup.yamlconverter.newAction">
+         </action>
+      </objectContribution>
+   </extension>
+
+</plugin>
