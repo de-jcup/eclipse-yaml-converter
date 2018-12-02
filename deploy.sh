@@ -16,4 +16,4 @@ if [ -z "$BINTRAY_API_KEY" ]; then
 	echo "bintray api key not set"
 	show_help_and_exit;
 fi
-./pushToBintray.sh ${BINTRAY_USER} ${BINTRAY_API_KEY} de-jcup yamleditor update-site current ./yamleditor-updatesite/
+./pushToBintray.sh ${BINTRAY_USER} ${BINTRAY_API_KEY} de-jcup yamlconverter update-site current ./yaml-converter-updatesite/

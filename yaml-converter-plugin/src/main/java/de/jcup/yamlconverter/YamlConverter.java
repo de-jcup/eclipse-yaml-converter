@@ -58,12 +58,12 @@ public class YamlConverter {
 	// https://stackoverflow.com/questions/23744216/how-do-i-convert-from-yaml-to-json-in-java
 	// https://stackoverflow.com/questions/29340383/convert-map-to-json-using-jackson
 	public File convertToJson(File yamlFile) throws IOException {
-		return convertToJson(createNewFile(".json", yamlFile));
+		return convertToJson(yamlFile, createNewFile(".json", yamlFile));
 	}
 
 	public File convertToJson(File yamlFile, File outputFile) throws IOException {
 		try (FileReader fileReader = new FileReader(yamlFile); FileWriter fileWriter = new FileWriter(outputFile)) {
-			Object object = yamlParser.load(fileReader);
+			Object object = yamlParser.loadAll(fileReader);
 			jsonMapper.writeValue(fileWriter, object);
 		}
 		return outputFile;

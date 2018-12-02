@@ -1,7 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <!--                          PROPERTY TESTERS                            -->
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <extension point="org.eclipse.core.expressions.propertyTesters">
+  	  <!-- see https://wiki.eclipse.org/Platform_Expression_Framework -->
+  	  <!-- see http://help.eclipse.org/neon/index.jsp?topic=/org.eclipse.platform.doc.isv/guide/workbench_cmd_expressions.htm -->
+  	  <!-- see http://www.robertwloch.net/2011/01/eclipse-tips-tricks-property-testers-with-command-core-expressions/ -->
+      <propertyTester
+          class="de.jcup.yamlconverter.YamlConverterPropertyTester"
+          id="de.jcup.yamlconverter.propertytester"
+          namespace="de.jcup.yamlconverter"
+          properties="isJSonFile,isYamlFile"
+          type="org.eclipse.core.resources.IFile">
+      </propertyTester>
+      
+   </extension>
+   
+   
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <!--                          COMMANDS                                    -->
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+      		 name="Convert JSON to YAML"
+            categoryId="yamlconverter.command.category"
+      		id="yamlconverter.convert.jsontoyaml"
+      >
+      </command>
+   </extension>
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <!--                          HANDLER                                     -->
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <extension
+         point="org.eclipse.ui.handlers">
+         
+      <handler
+            commandId="yamlconverter.convert.jsontoyaml"
+            class="de.jcup.yamlconverter.ConvertJSONToYAMLHandler">
+      </handler>
+      <handler
+            commandId="yamlconverter.convert.yamltojson"
+            class="de.jcup.yamlconverter.ConvertYAMLtoJSONHandler">
+      </handler>
+   </extension>
+   
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   <!--        POPUP                                                         -->
+   <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+   
+    <extension point="org.eclipse.ui.menus">
+        <!-- http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fguide%2Fworkbench_cmd_menus.htm -->
+        <menuContribution locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+                <!-- Detect new root project -->
+                <command commandId="yamlconverter.convert.jsontoyaml"
+                        label="Convert to YAML" 
+                        tooltip="Converts from JSON to YAML"
+                        icon="icons/yaml-converter.png"
+                        style="push">
+                        <visibleWhen 
+                              checkEnabled="false">
+                              <with
+                                    variable="activeMenuSelection">
+                                    <and>
+				         				<count value="1"/>
+	                                    <iterate ifEmpty="false">
+	                                    	 <adapt type="org.eclipse.core.resources.IFile">
+			         							<test property="de.jcup.yamlconverter.isJSonFile" value="true"/>
+				         					</adapt>
+				         				</iterate>
+                                    </and>
+                              </with>
+                        </visibleWhen>
+                </command>
+                 <command commandId="yamlconverter.convert.yamltojson"
+                        label="Convert to JSON" 
+                        tooltip="Converts from YAML to JSON"
+                        icon="icons/yaml-converter.png"
+                        style="push">
+                        <visibleWhen 
+                              checkEnabled="false">
+                              <with
+                                    variable="activeMenuSelection">
+                                    <and>
+				         				<count value="1"/>
+	                                    <iterate ifEmpty="false">
+	                                    	 <adapt type="org.eclipse.core.resources.IFile">
+			         							<test property="de.jcup.yamlconverter.isYamlFile" value="true"/>
+				         					</adapt>
+				         				</iterate>
+                                    </and>
+                              </with>
+                        </visibleWhen>
+                </command>
+        </menuContribution>
+   </extension>
+   
 
+<!--
    <extension
          point="org.eclipse.ui.popupMenus">
       <objectContribution
@@ -16,13 +114,25 @@
             </separator>
          </menu>
          <action
-               label="Convert JSON to YAML"
                class="de.jcup.yamlconverter.popup.actions.ConvertJSONtoYAMLAction"
-               menubarPath="de.jcup.yamlconverter.menu1/group1"
                enablesFor="1"
-               id="de.jcup.yamlconverter.newAction">
+               icon="icons/yaml-converter.png"
+               id="de.jcup.yamlconverter.convertJSONtoYAMLaction"
+               label="Convert JSON to YAML"
+               menubarPath="de.jcup.yamlconverter.menu1/group1">
+         </action>
+         <action
+               class="de.jcup.yamlconverter.popup.actions.ConvertYAMLToJSONAction"
+               enablesFor="1"
+               icon="icons/yaml-converter.png"
+               id="de.jcup.yamlconverter.convertYAMLtoJSONaction"
+               label="Convert YAML to JSON"
+               menubarPath="de.jcup.yamlconverter.menu1/group1">
          </action>
       </objectContribution>
    </extension>
+-->
+
+
 
 </plugin>
